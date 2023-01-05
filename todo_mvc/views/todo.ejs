@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO APP</title>
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <section>
+    <nav class="nav">
+        <a class="todo">Todo App</a>
+    </nav>
+   <div class="container">
+        <form action="/add_todo" method="post" class="form">
+            <input type="text" name="todo" placeholder="Enter Todo" class="input" />
+            <input type="submit" class="sub" value="Add Todo"/>
+        </form>
+        <ul class="todo-list">
+            <% name.forEach(todos => { %>
+            <li class="todo-item">
+              <input type="checkbox" class="todo-checkbox">
+              <span class="todo-text"><%= todos %></span>
+              <span class="cross" >❌</span>
+            </li>
+            <% }) %>
+          </ul>
+          
+        <!-- <ul class="list-group my-5">
+            <% name.forEach(todos => { %>
+            <li class="list-group-item"><%= todos %> </li>
+            <% }) %>
+        </ul> -->
+        
+    </div>
+    </div>
+</section>
+</body>
+</html>
