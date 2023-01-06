@@ -68,45 +68,58 @@ text-align: center;
     border-radius: 1rem;
 }
 
-.radio{
-   display: flex;
-   margin-top: 8px;
-  border-radius: 50%;
-   height: 20px;
-   width: 30px;
-    margin-bottom: 15px;
-    border-style: none;
-    color: rgb(123, 184, 123);
-     
- }
- .todo-list {
-    list-style: none;
-    padding: 20px;
-    margin: 10px;
+  
+   .todo-text {
+    
+    color: black;
+  }
+   .todo-items {
+    min-width: 450px;
   }
   
-  .todo-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+  /* each li with class="item" */
+  .item {
+    background-color: #fff;
+    padding: 10px;
+    font-size: 1.1rem;
   }
   
-  .todo-checkbox {
-    margin-right: 15px;
-    width: 20px;
-    height: 25px;
+  .item:first-child {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
   }
   
-  .todo-text {
-    font-size: 26px;
+  .item:last-child {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
   }
-  .cross{
-    margin-left: 15px;
-    width: 50px;
-   
+  
+  .checkbox {
+    margin-right: 10px;
   }
-   /* background-color: aquamarine; */
-   /* z-index: 1000; */
+  
+  .delete-button {
+    float: right;
+    background-color: #dc143c;
+    border: none;
+    outline: none;
+    border-radius: 7px;
+    padding: 2px 5px;
+    margin-left: 10px;
+    font-size: 1.1rem;
+    font-weight: 550;
+  }
+  
+  /* applied when the todo item is checked */
+  .checked { 
+    text-decoration: line-through;
+  }
 
+ul {
+    list-style-type: none; /* get rid of bullet points on side of list items */
+  }
 
-
+  /* <a href="/delete/todo/<%= todos.index %>"
+        <span class="delete-button" >X</span>
+        </a> */
+        
