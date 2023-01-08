@@ -119,7 +119,13 @@ ul {
     list-style-type: none; /* get rid of bullet points on side of list items */
   }
 
-  /* <a href="/delete/todo/<%= todos.index %>"
-        <span class="delete-button" >X</span>
-        </a> */
-        
+        .checkbox:checked + .todo-text {
+            text-decoration: line-through;
+            text-decoration-thickness:2px;
+            text-decoration-color: red;
+          }
+          .delete-button {
+    text-decoration: none;
+    color: black;
+    font-weight: 100;
+}

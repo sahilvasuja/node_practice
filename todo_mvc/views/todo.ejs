@@ -10,13 +10,14 @@
 </head>
 
 <body>
+    
     <section>
     <nav class="nav">
         <a class="todo">Todo App</a>
     </nav>
    <div class="container">
         <form action="/add_todo" method="post" class="form">
-            <input type="text" name="todo" placeholder="Enter Todo" class="input" />
+            <input type="text" name="todo" placeholder="Enter Todo" class="input" id="input-text" />
             <input type="submit" class="sub" value="Add Todo"/>
         </form>
         <ul class="todo-items">
@@ -25,9 +26,10 @@
                
             <li class="item" id="li">
                 
-              <input type="checkbox" class="checkbox hidden_real_check" <%= todos.iscompleted? "checked" : "" %> >
-              <span class="todo-text" ><%= todos.task%> </span>
-               <a class="delete-button" href="/delete/<%= index %>"  >X</a>
+              <input type="checkbox" onchange="check(`<%= index %>`)" class="checkbox hidden_real_check" <%= todos.iscompleted? "checked" : "" %> >
+              <span class="todo-text " ><%= todos.task%> </span>
+                <!-- <a><button class="delete-button">Edit</button></a> -->
+               <a href="/delete/<%= index %>"  ><button class="delete-button">X</button></a>
             
             </li>
             <% }) %>
@@ -37,5 +39,14 @@
     </div>
     </div>
 </section>
+<script>
+   
+function check(index) {
+      console.log("check")
+    window.location.href= `/check/${index}`
+}
+
+    
+</script>
 </body>
 </html>
