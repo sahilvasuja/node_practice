@@ -12,11 +12,15 @@ app.get("/", function (req, res) {
   fs.readFile("database.json", (err, data) => {
     if (err) throw err;
     let jsonData = JSON.parse(data);
+    console.log(jsonData, "15")
     res.render("todo", { name: jsonData });
   });
 });
 app.post("/add_todo", (req, res) => {
-  const result = req.body.todo;
+    console.log(req.body,"20")
+
+    
+  const result = req.body.todos;
   console.log(result, "14");
   fs.readFile("database.json", (err, data) => {
     if (err) throw err;
@@ -33,6 +37,7 @@ app.post("/add_todo", (req, res) => {
       res.render("todo", { name: jsonData });
     });
   });
+
 });
 app.get("/check/:id", async (req, res) => {
   const id = req.params.id;
@@ -41,8 +46,7 @@ app.get("/check/:id", async (req, res) => {
     if (err) throw err;
     const jsonData = JSON.parse(data);
     jsonData[id].iscompleted=!jsonData[id].iscompleted
-    console.log()
-    console.log(jsonData);
+    console.log(jsonData,"45");
     fs.writeFile("database.json", JSON.stringify(jsonData), (err) => {
       if (err) throw err;
       console.log("checked is given");
@@ -69,21 +73,23 @@ app.get("/delete/:id", async (req, res) => {
     res.redirect("/");
 });
 
-app.get("/update/:id", async (req, res) => {
-  const id = req.params.id;
-  console.log(id, "65");
+app.post("/update_todo", (req, res) => {
+  const result = req.body;
+  console.log(result, "14");
   fs.readFile("database.json", (err, data) => {
     if (err) throw err;
-    const result = req.body.todo;
-    const jsonData = JSON.parse(data);
-    jsonData[id].task = result;
+    console.log("19", result);
+    let jsonData = JSON.parse(data);
+    console.log(jsonData,"83")
+   jsonData[result.index].task=result.todos;
     fs.writeFile("database.json", JSON.stringify(jsonData), (err) => {
       if (err) throw err;
-      console.log("Data updated");
+      res.redirect("/");
+    //   res.render("todo", { name: jsonData });
     });
-  });
-  res.redirect("/");
 });
+
+  });
 app.listen(8000, () => {
   console.log("sever connected");
 });

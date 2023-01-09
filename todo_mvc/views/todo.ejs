@@ -16,9 +16,14 @@
         <a class="todo">Todo App</a>
     </nav>
    <div class="container">
-        <form action="/add_todo" method="post" class="form">
-            <input type="text" name="todo" placeholder="Enter Todo" class="input" id="input-text" />
-            <input type="submit" class="sub" value="Add Todo"/>
+        <form action="/add_todo" method="post" class="form" id="real-form">
+            <input type="text" name="todos" placeholder="Enter Todo" class="input" id="input-text" />
+            <input type="submit" class="sub" id="enter-button" value="Add Todo"/>
+        </form>
+        <form action="/update_todo" method="post" class="form" id="input-edit">
+            <input type="text" name="todos" placeholder="Enter Todo" class="input" id="edit-text" />
+            <input type="hidden" name="index" id="hidden-input" />
+            <input type="submit" class="sub" id="enter-button" value="Save Todo"/>
         </form>
         <ul class="todo-items">
 
@@ -26,14 +31,13 @@
                
             <li class="item" id="li">
                 
-              <input type="checkbox" onchange="check(`<%= index %>`)" class="checkbox hidden_real_check" <%= todos.iscompleted? "checked" : "" %> >
-              <span class="todo-text " ><%= todos.task%> </span>
-                <!-- <a><button class="delete-button">Edit</button></a> -->
+              <input type="checkbox" onchange="check(`<%= index %>`)" class="checkbox" <%= todos.iscompleted? "checked" : "" %> >
+              <span class="todo-text " id="my_field" ><%= todos.task%></span>
+              <button class="edit-button" onclick="edit(`<%= index %>` , `<%= todos.task %>`)" id="edit">EDIT</button>
                <a href="/delete/<%= index %>"  ><button class="delete-button">X</button></a>
             
             </li>
             <% }) %>
-          </ul>
          
         
     </div>
@@ -45,7 +49,30 @@ function check(index) {
       console.log("check")
     window.location.href= `/check/${index}`
 }
+function active(name){
+    console.log(JSON.stringify(name))
+    console.log(name,"53")
+    console.log("active")
+    let html = ``;
+    name.forEach((todo,index) => {
+        console.log("active",loop)
+        if(todo[index].isCompleted){
+            `<li>hlo</li>`
+        }
+    });
 
+}
+function edit(index, todos){
+    console.log("first", index, todos)
+    const realform=document.getElementById("real-form")
+    realform.style.display="none"
+    const editform=document.getElementById("input-edit");
+    editform.style.display="flex"
+    document.getElementById("edit-text").value=todos;
+    const hiddeninput=document.getElementById("hidden-input")
+    hiddeninput.value=index
+   
+}
     
 </script>
 </body>

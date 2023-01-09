@@ -70,7 +70,7 @@ text-align: center;
 
   
    .todo-text {
-    
+    border: none;
     color: black;
   }
    .todo-items {
@@ -128,4 +128,28 @@ ul {
     text-decoration: none;
     color: black;
     font-weight: 100;
+}
+.filter{
+    display: flex;
+    flex-direction: row;
+    min-width: 450px;
+    justify-content: space-between;
+    border: 1px solid;
+    padding: 5px;
+    margin-left: 25px;
+}
+.edit-button{
+    float: right;
+    background-color: rgb(49, 116, 49);
+    border: none;
+    outline: none;
+    border-radius: 7px;
+    color: aliceblue;
+    padding: 2px 5px;
+    margin-left: 10px;
+    font-size: 1.1rem;
+    
+}
+#input-edit{
+    display: none;
 }
