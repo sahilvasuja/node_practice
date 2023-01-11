@@ -67,7 +67,11 @@ body{
     color: grey;
     font-weight: 200;
 } 
+#foot{
+   visibility: hidden;
+}
 #footer{
+
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     border: 1px solid #dad9d9;
     font-style: normal;
@@ -101,6 +105,10 @@ body{
     display: flex;
     justify-content: space-between;
     
+}
+#all{
+    border: 1px solid rgb(235,216,215);
+   padding: 3px
 }
 #all:hover{
     border: 1px solid rgb(235,216,215);
@@ -138,4 +146,7 @@ body{
 
     border-radius: 50% 50%;
     
+}
+.checkline{
+    text-decoration: line-through;
 }
