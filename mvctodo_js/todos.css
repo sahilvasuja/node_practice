@@ -115,11 +115,27 @@ body{
    padding: 3px;
 }
 #cross{
+   
     color: rgb(183, 49, 49);
     margin-right: 15px;
-
-    
 }
+/* #cross:hover{
+    display: "visible";
+    
+    
+} */
 #clear:hover{
     text-decoration: underline;
+}
+#checkbox{
+    background-color: white;
+   border: 6px solid black;
+    clip-path: circle(40% at 50% 50% ); 
+   margin-top: 7px;
+    height: 30px;
+    width: 50px;
+
+
+    border-radius: 50% 50%;
+    
 }
