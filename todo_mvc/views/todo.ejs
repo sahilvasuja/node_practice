@@ -26,7 +26,7 @@
             <input type="submit" class="sub" id="enter-button" value="Save Todo"/>
         </form>
         <ul class="todo-items">
-
+            
             <% name.forEach((todos,index) => { %>
                
             <li class="item" id="li">
@@ -38,8 +38,12 @@
             
             </li>
             <% }) %>
-         
-        
+        </ul>
+        <!-- <ul id="filter">
+            <li>All</li>
+            <li id="active" onclick="active()">Active</li>
+            <li>Completed</li>
+        </ul> -->
     </div>
     </div>
 </section>
@@ -49,12 +53,14 @@ function check(index) {
       console.log("check")
     window.location.href= `/check/${index}`
 }
-function active(name){
-    console.log(JSON.stringify(name))
-    console.log(name,"53")
+function active(){
+    console.log(name, "57")
+    const act=document.getElementById("input-text").name;
+    console.log(act,"58")
+   
     console.log("active")
     let html = ``;
-    name.forEach((todo,index) => {
+   name.forEach((todo,index) => {
         console.log("active",loop)
         if(todo[index].isCompleted){
             `<li>hlo</li>`

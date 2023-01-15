@@ -129,7 +129,7 @@ ul {
     color: black;
     font-weight: 100;
 }
-.filter{
+#filter{
     display: flex;
     flex-direction: row;
     min-width: 450px;
