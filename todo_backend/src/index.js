@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose=require('mongoose')
- const {connectionDb, getDb} =require('./database.js')
+//  const {connectionDb, getDb} =require('./database.js')
 const app = express();
 app.use(express.json());
 const path = require("path");

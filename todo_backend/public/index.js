@@ -1,4 +1,3 @@
-const { get } = require("mongoose");
 
 let todos = [];
 let res = false;
