@@ -156,10 +156,11 @@ class Mytask {
         let additem=document.getElementById("addtodo");
         let html=""
         for(let i in todos){
+            console.log(active,"159")
             if(todos[i].isCompleted==false){
                 html+=` <div class="inneradd"> 
                 <input type="checkbox" id="checkbox" onclick="mytask.checkbox(event,${i})">
-                <p> ${this.todoItems[i].task} </p>
+                <p> ${todos[i].task} </p>
                 <p id="cross" onclick="mytask.remove(${i})">X</p>
                 </div>
                 `
@@ -167,7 +168,7 @@ class Mytask {
         }
         additem.innerHTML=html
         // this.display()
-        console.log(this.todoItems,"act")
+        console.log(todos,"act")
     }
     completed(){
 
@@ -185,18 +186,18 @@ class Mytask {
         }
         additem.innerHTML=html
         // this.display()
-        console.log(this.todoItems,"comp")
+        console.log(todos,"comp")
     }
     clear(){
-        console.log("first", this.todoItems)
-        this.todoItems=this.todoItems.filter(function(index){
+        console.log("first", todos)
+        todos=todos.filter(function(index){
             
                return !index.isCompleted
             
         })
-        console.log(this.todoItems);
+        console.log(todos);
         // console.log(index,"clear")
-         this.display()
+         mytask.display()
     }
     
 }

@@ -72,10 +72,10 @@ console.log(task1,"26")
     }
     catch(err){
         console.log('error:', err)
-          
+        res.send(err);  
     }
   })
-  app.patch("/uncompleted/:id",async(res,req)=>{
+  app.patch("/uncompleted/:id",async(req,res)=>{
     try{
         const id=req.params.id;
         console.log(id,"79")
