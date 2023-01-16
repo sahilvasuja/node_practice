@@ -1,24 +1,56 @@
+const { get } = require("mongoose");
+
 let todos = [];
 let res = false;
+function getTodos() {
+    fetch("/gettodos").then((response) => {
+        return response.text();
+    }).then((data) => {
+        todos = JSON.parse(data);
+        console.log(todos);
+        mytask.display();
+    })
+}
 class Todo {
-    constructor(text, iscompleted) {
-        this.text = text;
-        this.iscompleted = iscompleted;
+    constructor(task, isCompleted) {
+        this.task = task;
+        this.isCompleted = isCompleted;
     }
 }
 class Mytask {
    constructor(){
     this.todoItems=[];
    }
-   add(item){
-        this.todoItems.push(item);
-        mytask.display();
-   }
+   add(task) {
+    fetch('/addtodo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(task),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            this.todoItems.push(data);
+
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+      
+    }
+
+//    add(item){
+//         this.todoItems.push(item);
+//         mytask.display();
+//    }
    display(){
         let addtodo=document.getElementById("addtodo");
         addtodo.innerHTML=""
         let html=``;
         if( this.todoItems[i].iscompleted==true){
+            console.log(this.todoItems[i],"51")
             html+= `<div class="inneradd">
             <input type="checkbox" id="checkbox"  onclick="mytask.checkbox(${i})" checked>
             <p class="checkline"> ${this.todoItems[i].text} </p>
@@ -132,6 +164,7 @@ const input=document.getElementById("text");
 const result=input.innerHTML;
 console.log(result)
 const mytask=new Mytask();
+getTodos();
 input.addEventListener(keydown,(e)=>{
     if(input=="" || e.key=="enter"){
         let ans=e.target.value;
