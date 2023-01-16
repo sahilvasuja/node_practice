@@ -96,25 +96,34 @@ class Mytask {
             }
         }
         console.log(count,"98")
+        const cnt=document.getElementById('count');
+        cnt.innerHTML=count+ " items left";
     }
     icon(){
-        const c=0;
-        for(let i in this.todoItems){
-            if(this.todoItems[i].iscompleted){
-                c++;
-            }
-        }
-        if(c==this.todoItems.length){
-            for(let i in this.todoItems){
-                this.todoItems[i].iscompleted=false;
-            }
+        // const c=0;
+        // for(let i in todos){
+        //     if(todos[i].iscompleted){
+        //         c++;
+        //     }
+        // }
+        console.log(res,"109")
+        if(res==false){
+            fetch('/markalluncompleted').then((res)=>{return res.text()})
+            .then((data)=>{
+                todos=JSON.parse(data);
+                mytask.display()
+            })
+            res=true;
         }
         else{
-            for(let i in this.todoItems){
-                this.todoItems[i].iscompleted=true;
-            }
+            fetch('/markallcompleted').then((res)=>{return res.text()})
+            .then((data)=>{
+                todos=JSON.parse(data);
+                mytask.display()
+            })
+            res=false;
         }
-        this.display();
+        mytask.display();
     }
     checkbox(e,i){
         if(e.target.checked){
@@ -189,15 +198,13 @@ class Mytask {
         console.log(todos,"comp")
     }
     clear(){
-        console.log("first", todos)
-        todos=todos.filter(function(index){
-            
-               return !index.isCompleted
-            
+        fetch('/clearcompleted').then((res)=>{return res.text()})
+        .then((data)=>{
+            console.log(data,"199")
+            todos=JSON.parse(data);
+            mytask.display()
         })
-        console.log(todos);
-        // console.log(index,"clear")
-         mytask.display()
+       
     }
     
 }

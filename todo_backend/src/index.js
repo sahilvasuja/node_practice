@@ -19,6 +19,30 @@ app.get("/gettodos",async(req,res)=>{
     console.log(result,"19");
       res.send(result);
   })
+  app.get("/markallcompleted",async(req,res)=>{
+    const todos=await Todo.find();
+    for(i in todos){
+        if(todos[i].isCompleted==false)
+      todos[i].isCompleted=true;
+      await todos[i].save(); 
+      console.log(todos[i]);
+ 
+    }
+    res.send(todos);
+    
+  })
+  app.get("/markalluncompleted",async(req,res)=>{
+    const todos=await Todo.find();
+    for(i in todos){
+        if(todos[i].isCompleted==true)
+      todos[i].isCompleted=false;
+      await todos[i].save(); 
+      console.log(todos[i]);
+ 
+    }
+    res.send(todos);
+    
+  })
 app.post("/addtodo", async (req, res) => {
     try {
 console.log(req.body, "44");
@@ -90,6 +114,11 @@ console.log(task1,"26")
         console.log('error:', err)
         
     }
+  })
+  app.get("/clearcompleted",async(req,res)=>{
+    const result=await Todo.remove({isCompleted: true})
+    const todos=await Todo.find();
+    res.send(todos);
   })
   app.listen(17000,()=>{
     console.log(`listening to port no. `);

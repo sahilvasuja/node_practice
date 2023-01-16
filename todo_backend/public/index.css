@@ -100,8 +100,9 @@ body{
 }
 .inneradd{
     /* margin-top: 5px; */
-    border: 1px solid #dad9d9;
-    background-color: white;
+    border:1px solid lightgrey;
+    background-color: #f7f6f6;
+
     display: flex;
     justify-content: space-between;
     
@@ -136,16 +137,14 @@ body{
     text-decoration: underline;
 }
 #checkbox{
+    margin-top: 6px;
+    width: 2rem;
+    height: 2rem;
+    clip-path: circle(40% at 50% 50%);
     background-color: white;
-   border: 6px solid black;
-    clip-path: circle(40% at 50% 50% ); 
-   margin-top: 7px;
-    height: 30px;
-    width: 50px;
-
-
-    border-radius: 50% 50%;
+    cursor: pointer;
     
+     
 }
 .checkline{
     text-decoration: line-through;
