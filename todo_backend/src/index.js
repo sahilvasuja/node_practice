@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose=require('mongoose')
-//  const {connectionDb, getDb} =require('./database.js')
+const dotenv = require('dotenv');
+dotenv.config({ path: "./config.env" });
+const PORT=8080;
 const app = express();
 app.use(express.json());
 const path = require("path");
@@ -120,6 +122,6 @@ console.log(task1,"26")
     const todos=await Todo.find();
     res.send(todos);
   })
-  app.listen(17000,()=>{
+  app.listen(PORT,()=>{
     console.log(`listening to port no. `);
 })

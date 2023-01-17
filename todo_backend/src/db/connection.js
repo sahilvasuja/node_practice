@@ -1,8 +1,9 @@
 const mongoose=require('mongoose');
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb://localhost:27017/todoapp',{
-
-}).then(()=>{
+const dotenv = require('dotenv');
+dotenv.config({ path: "./config.env" });
+console.log(process.env.URL,"5")
+mongoose.connect(process.env.URL).then(()=>{
     console.log("connection successfull")
 }).catch((err)=>{
     console.log(err)

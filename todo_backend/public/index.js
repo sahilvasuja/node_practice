@@ -3,6 +3,7 @@ let todos = [];
 let res = false;
 function getTodos() {
     fetch("/gettodos").then((response) => {
+        console.log(response,"6")
         return response.text();
     }).then((data) => {
         todos = JSON.parse(data);
@@ -26,7 +27,8 @@ class Mytask {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(task),
+        body: JSON.stringify(task)
+      
     })
         .then(response => response.json())
         .then(data => {
@@ -45,9 +47,6 @@ class Mytask {
         console.log(id,"45")
         fetch('/delete/'+ id,{
             method: 'DELETE',
-            // headers: {
-            //     'Content-Type': 'application/json',
-            // },
 
         }).then(res=> res.json()).
         then(data=>{
@@ -84,10 +83,6 @@ class Mytask {
             addtodo.innerHTML=html;
     }
 }
-//    remove(index){
-//         this.todoItems[index].splice(index,1);
-//         this.display();
-//     }
     count(){
         let count=0;
         for(let i in todos){
