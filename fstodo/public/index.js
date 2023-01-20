@@ -43,7 +43,7 @@ class Mytask {
       
     }
     remove(index){
-        let id=todos[index]._id;
+        let id=todos[index].id;
         console.log(id,"45")
         fetch('/delete/'+ id,{
             method: 'DELETE',
@@ -122,14 +122,15 @@ class Mytask {
     }
     checkbox(e,i){
         if(e.target.checked){
-           let id=todos[i]._id;
-           fetch('/markedcompleted/'+ id,
+           let id=todos[i].id;
+           fetch('/markedcompleted/'+id,
            {
             method: 'PATCH'
            }).then(res=>res.json())
            .then(data=>{
             console.log(data,"127")
             todos=data
+            console.log(todos,"133")
             mytask.count()
             mytask.display()
            }).catch((err=>{
@@ -137,13 +138,14 @@ class Mytask {
            }))
         }
         else{
-         let id=todos[i]._id;
+         let id=todos[i].id;
          console.log(id,"137")
-         fetch('/uncompleted/'+ id,{
+         fetch('/uncompleted/'+id,{
             method: 'PATCH'
          }).then(res=>res.json()).then(data=>{
             console.log(data,"139")
             todos=data
+            console.log(todos,"148")
             mytask.count()
             mytask.display()
          }).catch((err=>{
