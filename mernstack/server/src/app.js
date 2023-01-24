@@ -36,6 +36,36 @@ app.get("/gettodos",async(req,res)=>{
     res.send(todos);
     
   })
+  app.get("/activetodos",async(req,res)=>{
+    const todos=await Todo.find();
+    let active=[]
+    for(i in todos){
+        if(todos[i].isCompleted===false){
+          active.push(todos[i])
+        }
+      }  console.log(active,"46")
+        for(i in active){
+          await active[i].save(); 
+          console.log(active[i]);
+        }
+        res.send(active);
+    
+  })
+  app.get("/completedtodos",async(req,res)=>{
+    const todos=await Todo.find();
+    let completed=[]
+    for(i in todos){
+        if(todos[i].isCompleted===true){
+          completed.push(todos[i])
+        }
+      }  console.log(completed,"46")
+        for(i in completed){
+          await completed[i].save(); 
+          console.log(completed[i]);
+        }
+        res.send(completed);
+    
+  })
   app.get("/markalluncompleted",async(req,res)=>{
     const todos=await Todo.find();
     for(i in todos){

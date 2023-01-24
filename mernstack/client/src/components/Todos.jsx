@@ -22,6 +22,38 @@ const Todos = () => {
             console.log(err,"17")
         }
     }
+    const all=async()=>{
+        try{
+            const getarray= await axios.get('http://localhost:8070/gettodos');
+         //    console.log(getarray.data,"15")
+            setarray(getarray.data)
+         }
+         catch(err){
+             console.log(err,"17")
+         }
+    }
+    const active=async()=>{
+        try{
+            const activearray= await axios.get('http://localhost:8070/activetodos');
+         //    console.log(getarray.data,"15")
+
+            setarray(activearray.data)
+         }
+         catch(err){
+             console.log(err,"17")
+         }
+    }
+    const completed=async()=>{
+        try{
+            const completedarray= await axios.get('http://localhost:8070/completedtodos');
+         //    console.log(getarray.data,"15")
+
+             setarray(completedarray.data)
+         }
+         catch(err){
+             console.log(err,"17")
+         }
+    }
     const icon=async()=>{
         try{
           
@@ -166,11 +198,11 @@ const Todos = () => {
         </div>
         <div id="foot">
             <div id="footer">
-                <p id="count">`{count} items left`</p>
+                <p id="count">{count} items left</p>
                     <div id="filter">
-                        <p id="all">All</p>
-                        <p id="active">Active</p>
-                        <p id="completed">Completed</p>
+                        <p id="all" onClick={all}>All</p>
+                        <p id="active" onClick={active}>Active</p>
+                        <p id="completed" onClick={completed}>Completed</p>
                     </div>
                 <p id="clear" onClick={clearCompleted}>Clear Completed</p>
             </div>
