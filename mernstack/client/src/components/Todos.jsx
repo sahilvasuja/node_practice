@@ -1,10 +1,11 @@
 import React, { useState,useEffect } from 'react'
 import axios from 'axios'
-
+import { FaChevronDown } from "react-icons/fa";
 const Todos = () => {
     const [array,setarray]=useState([]);
     const [input,setinput]=useState('');
-    const [MarkComplpleted,setMarkCompleted]=useState([])
+    const [allDone,setallDone]=useState(false)
+    
     useEffect(()=>{gettodo()},[input])
   const inputtext=((event)=>{
     console.log(event.target.value,"7")
@@ -19,6 +20,30 @@ const Todos = () => {
         }
         catch(err){
             console.log(err,"17")
+        }
+    }
+    const icon=async()=>{
+        try{
+          
+            if(allDone){
+                    const markcompleted= await axios.get(`http://localhost:8070/markallcompleted`);
+                     setarray(markcompleted.data)
+                     console.log(markcompleted.data,"46")
+
+            }
+            else{
+                console.log("markedalluncompleted");
+                
+                const markuncompleted=await axios.get(`http://localhost:8070/markalluncompleted/`);
+                
+                setarray(markuncompleted.data)
+                console.log(markuncompleted.data,"52")
+            }
+            setallDone(!allDone)
+        }
+        
+        catch(err){
+            console.log(err,"55")
         }
     }
     const deletetask=async(ele)=>{
@@ -44,14 +69,18 @@ const Todos = () => {
                 console.log(ele,"41")
                 console.log("markcompleted");
                 let id=ele._id;
-                const markcompleted=await axios.patch(`http://localhost:8070/markedcompleted/${id}`);
-                console.log(markcompleted,"46")
+               await axios.patch(`http://localhost:8070/markedcompleted/${id}`);
+                const markcompleted=await axios.get(`http://localhost:8070/gettodos/`);
+                setarray(markcompleted.data)
+                console.log(markcompleted.data,"46")
             }
             else{
                 console.log("unmarkcompleted");
                 let id=ele._id;
-                const markuncompleted=await axios.patch(`http://localhost:8070/uncompleted/${id}`);
-                console.log(markuncompleted,"52")
+                await axios.patch(`http://localhost:8070/uncompleted/${id}`);
+                const markuncompleted=await axios.get(`http://localhost:8070/gettodos/`);
+                setarray(markuncompleted.data)
+                console.log(markuncompleted.data,"52")
             }
             
         }
@@ -88,13 +117,9 @@ const Todos = () => {
     }
     const clearCompleted= async()=>{
         try{
-            let clearcompleted=[]
-            for(let i in array){
-                if(!array[i].isCompleted){
-                    clearcompleted.push(array[i]);
-                }
-            }
-            setarray([clearCompleted]);
+            let clearcompleted=await axios.get('http://localhost:8070/clearcompleted')
+            console.log(clearcompleted,"96")
+             setarray(clearcompleted.data);
         }
         catch(err){
             console.log(err,"98")
@@ -109,12 +134,12 @@ const Todos = () => {
   return (
    <>
     
-    <div class="container">
-    <h1 class="text-todo">Todos</h1>
-        <div class="innercontainer">  
-            <form class="task" onClick={addtask}>
-                <p id="icon">
-                    <i class="fa-solid fa-chevron-down" id="arrow"></i>
+    <div className="container">
+    <h1 className="text-todo">Todos</h1>
+        <div className="innercontainer">  
+            <form className="task" onClick={addtask}>
+                <p id="icon" onClick={icon} className={allDone?'checked':'none'}>
+                <FaChevronDown/>
                 </p>
                 
                 <input type="text" id="text" value={input} onChange={inputtext} placeholder="What needs to be done?" />
@@ -127,25 +152,15 @@ const Todos = () => {
         {
         
             array.map((ele)=>{
-            if(ele.isCompleted===true){
-                return(<div class="inneradd">
-                    <input type="checkbox" id="checkbox"   onClick={()=>Checkbox(ele)} checked />
-                    <p class="checkline"> {ele.task} </p>
+            
+                return(<div className="inneradd">
+                    <input type="checkbox" id="checkbox" onClick={()=>Checkbox(ele)} checked={ele.isCompleted} />
+                    <p style={{textDecoration: ele.isCompleted ? "line-through" : "none"}}> {ele.task} </p>
                     <p id="cross" onClick={()=>deletetask(ele)}>X</p>
                     </div>
                 )
-            }
-            else{
-                return(
-
-                 <div class="inneradd"> 
-                <input type="checkbox" id="checkbox" onClick={()=>Checkbox(ele)} />
-                <p> {ele.task} </p>
-                <p id="cross" onClick={()=>deletetask(ele)}>X</p>
-                </div>
-                
-            )
-            }
+            
+            
         })
         }
         </div>

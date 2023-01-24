@@ -27,7 +27,7 @@ app.get("/gettodos",async(req,res)=>{
   app.get("/markallcompleted",async(req,res)=>{
     const todos=await Todo.find();
     for(i in todos){
-        if(todos[i].isCompleted==false)
+        if(todos[i].isCompleted===false)
       todos[i].isCompleted=true;
       await todos[i].save(); 
       console.log(todos[i]);
@@ -118,6 +118,7 @@ console.log(task1,"26")
         const result= await todos.save();
         console.log(result,"81");
         const Todos=await Todo.find();
+        console.log(Todos,"121")
       res.send(Todos)
     }
     catch(err){
