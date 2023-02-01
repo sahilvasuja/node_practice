@@ -8,9 +8,13 @@ const typeDefs= gql`
     }
     type Query{
         getTodos:[Todo]
+        getTodo(id: ID):Todo
+        
     }
     type Mutation{
         addTodos(Task: String, isCompleted: Boolean):Todo
+        updateTodo(Task: String, isCompleted: Boolean, id:ID):Todo
+        deleteTodo(id:ID):Todo
     }
 `
 
