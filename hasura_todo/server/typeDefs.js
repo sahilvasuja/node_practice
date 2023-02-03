@@ -5,6 +5,7 @@ const typeDefs= gql`
         id: ID
         Task: String
         isCompleted: Boolean
+       
     }
     type Query{
         Todos:[Todo]
@@ -14,7 +15,7 @@ const typeDefs= gql`
     type Mutation{
         addTodos(Task: String, isCompleted: Boolean):Todo
         # updateTodo(Task: String, isCompleted: Boolean, id:ID):Todo
-        # deleteTodo(id:ID):Todo
+         deleteTodo(id:ID):Todo
     }
 `
 

@@ -1,29 +1,40 @@
 import { gql,useMutation,useQuery } from "@apollo/client"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 const getTodos = gql`
   {
     Todos {
+        id
         Task
         isCompleted
+    
     }
   }
 `;
 const addTodo= gql`
-    mutation addTodos($Task: String, $isCompleted: Boolean){
+    mutation addTodos($task: String, $isCompleted: Boolean){
         
-        addTodos(Task: $Task, isCompleted: $isCompleted){
+        addTodos(Task: $task, isCompleted: $isCompleted){
                 Task
                 isCompleted
+                
         }
     }
-
 `
+const deleteTask = gql`
+  mutation deletetask($id: ID) {
+    deletetask(id: $id) {
+        id
+    }
+  }
+`;
 function Data(){
     const [task,setTask]=useState("");
     const [isCompleted,setIscompleted]=useState(false);
-    
+   
+        const  { loading, error, data,refetch } = useQuery(getTodos)
     const [addTodos]=useMutation(addTodo,{
         update(cache, { data: { addTodos } }) {
+            console.log(addTodos,"28")
             const {Todos } = cache.readQuery({ query: getTodos });
             cache.writeQuery({
               query: getTodos,
@@ -36,14 +47,7 @@ function Data(){
           },
     })
 
-    // update(cache, { data: { addBook } }) {
-    //     const { books } = cache.readQuery({ query: GET_BOOKS });
-    //     cache.writeQuery({
-    //       query: GET_BOOKS,
-    //       data: { books: books.concat([addBook]) },
-    //     });
-    //   },
-    // });
+   
     const inputtext=(e)=>{
         console.log(e.target.value,"36")
         setTask(e.target.value)
@@ -56,8 +60,6 @@ function Data(){
     const Checkbox=async(e)=>{
 
     }
-    const { loading, error, data,refetch } = useQuery(getTodos);
-    console.log(data,"----------")
     return(
         <>
             <div className="container">
@@ -66,8 +68,9 @@ function Data(){
             <form className="task" onSubmit={async(e)=>
             {   e.preventDefault();
                 console.log(task,"39")
+               
                 await addTodos({variables: {task,isCompleted}})
-               console.log(task,"59")
+               
                 refetch();
                 setTask('');
             }}>

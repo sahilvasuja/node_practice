@@ -21,7 +21,7 @@ async function Server(){
     // catch(err){
     //     console.log(err)
     // }
-    const port=3015
+    const port=2527
     app.listen(port,()=>{console.log(`server connected at ${port}`)})
 }
 Server();

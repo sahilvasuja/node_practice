@@ -9,15 +9,16 @@ const resolvers = {
     addTodos: async (_,{Task,isCompleted}) => {
       const newTodo = {
         Task,
-        isCompleted
+        isCompleted,
+      
       };
       Todos.push(newTodo)
       return newTodo;
     },
-  //   deleteTodo: async (_, args) => {
-  //     const todo = await todoGraphql.findByIdAndDelete(args.id);
-  //     return todo;
-  //   },
+    deleteTodo: async (_, args) => {
+      const todo = Todos.filter(arg =>(arg.id!=args.id))
+      return todo;
+    },
   //   updateTodo: async (_, args) => {
   //     const updateTodo = {};
   //     console.log(_, args, "22");
