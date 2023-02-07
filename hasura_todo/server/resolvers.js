@@ -1,22 +1,33 @@
-
-const Todos=[]
+import todos from "./Todos.js";
+// const Todos=[]
 const resolvers = {
   Query: {
-    Todos: ()=>Todos
-    
+    Todos: async ()=>{
+      // Todos
+      const ttodos = await todos.find();
+      return ttodos;
+    }
   },
+  
   Mutation: {
-    addTodos: async (_,{Task,isCompleted}) => {
-      const newTodo = {
+    addTodos: async (_,{Task,isCompleted,id}) => {
+      const newTodo = new todos( {
         Task,
         isCompleted,
-      
-      };
-      Todos.push(newTodo)
-      return newTodo;
+       id: Date.now()
+        
+      })
+      // Todos.push(newTodo)
+       const todo = await newTodo.save();
+      // await  todo.save();
+      return todo;
+      // return newTodo;
     },
-    deleteTodo: async (_, args) => {
-      const todo = Todos.filter(arg =>(arg.id!=args.id))
+    deleteTodo: async (_, args,{id}) => {
+      // console.log(id,"25")
+      console.log(args.id,"27")
+      const todo = await todos.findByIdAndDelete({_id: args.id})
+      console.log(todo,30)
       return todo;
     },
   //   updateTodo: async (_, args) => {
