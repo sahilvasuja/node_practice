@@ -5,18 +5,10 @@ export const Header=()=>{
     const [input,setInput]=useState('')
 
     return (
-        <>
-             
-     
-             <div className="container">
-    <h1 className="text-todo">Todos</h1>
-        
-
-
-        
-    </div>
-   
-
-        </>
+    <>
+        <div className="container">
+            <h1 className="text-todo">Todos</h1>
+        </div>
+    </>
     )
 }
