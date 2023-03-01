@@ -15,12 +15,6 @@ export const Middle=()=>{
         console.log("object");
 
     }
-    const Checkbox=()=>{
-        
-        console.log("object");
-        
-
-    }
     const icon=()=>{
         
         console.log("object");
@@ -77,13 +71,20 @@ export const Middle=()=>{
     const clearCompleted=async(event)=>{
         try{
 
-            let clear=await axios.get('http://localhost:9000/cleared')
+            let clear=await axios.get(`http://localhost:9000/cleared`)
             console.log(clear,"49"); 
             setarray(clear.data)
         }
         catch(err){
             console.log(err,"70");
         }
+    }
+    const Checkbox=async(event)=>{
+        console.log("check");
+        const id=event._id;
+        console.log(event._id);
+        const checkbox=await axios.patch(`http://localhost:9000/check/${id}`)
+        // setarray(checkbox.data)
     }
     return(
         <>
@@ -105,7 +106,7 @@ export const Middle=()=>{
             array.map((ele)=>{
             
                 return(<div className="inneradd">
-                    <input type="checkbox" id="checkbox" onClick={()=>Checkbox(ele)} checked="ele.isCompleted" />
+                    <input type="checkbox" id="checkbox" onClick={()=>Checkbox(ele)} checked={ele.isCompleted} />
                     <p style={{textDecoration: ele.isCompleted ? "line-through" : "none"}}> {ele.task} </p>
                     <p id="cross" onClick={()=>deletetask(ele)}>X</p>
                     </div>

@@ -42,12 +42,19 @@ app.delete('/deletetask/:id',async(req,res)=>{
     res.send(results)
 })
 app.get('/cleared',async(req,res)=>{
-    console.log("object");
-  
-    const result=await NextTodo.deleteMany({isCompleted:false});
+    
+    
+    const result=await NextTodo.deleteMany({isCompleted:true});
     console.log(result,"39");
     const results=await NextTodo.find();
     res.send(results)
+})
+app.patch('/check/:id',async(req,res)=>{
+    const id=req.params.id;
+    const isCompleted=req.params.isCompleted;
+
+    const result=await NextTodo.findByIdAndUpdate(id,{isCompleted: !isCompleted});
+    res.send(result)
 })
 app.listen(PORT,()=>{
     console.log(`listening to port no. ${PORT} `);
