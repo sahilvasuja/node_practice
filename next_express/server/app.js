@@ -49,11 +49,58 @@ app.get('/cleared',async(req,res)=>{
     const results=await NextTodo.find();
     res.send(results)
 })
-app.patch('/check/:id',async(req,res)=>{
-    const id=req.params.id;
-    const isCompleted=req.params.isCompleted;
 
-    const result=await NextTodo.findByIdAndUpdate(id,{isCompleted: !isCompleted});
+app.patch("/check/:id",async(req,res)=>{
+    try{
+        let id=req.params.id;
+        console.log(id,"64")
+        let todos=await NextTodo.findById(id);
+        todos.isCompleted=true;
+        const result=await todos.save()
+        console.log(result,"67");
+        const Todos=await NextTodo.find();
+        console.log(Todos,"69")
+        res.send(Todos)
+    }
+    catch(err){
+        console.log('error:', err)
+        res.send(err);  
+    }
+  })
+  app.patch("/uncheck/:id",async(req,res)=>{
+    try{
+        const id=req.params.id;
+        console.log(id,"79")
+        let todos=await NextTodo.findById(id);
+        todos.isCompleted=false;
+        const result= await todos.save();
+        console.log(result,"81");
+        const Todos=await NextTodo.find();
+        console.log(Todos,"121")
+      res.send(Todos)
+    }
+    catch(err){
+        console.log('error:', err)
+        
+    }
+  })
+// app.patch('/check/:id',async(req,res)=>{
+//     const id=req.params.id;
+//     const isCompleted=req.params.isCompleted;
+
+//     const result=await NextTodo.findByIdAndUpdate(id,{isCompleted: !isCompleted});
+//     res.send(result)
+// })
+app.get('/activetodo',async(req,res)=>{
+    console.log("active backend");
+    const result=await NextTodo.find({isCompleted: false})
+    console.log(result,"64");
+    res.send(result)
+})
+app.get('/completedtodo',async(req,res)=>{
+    console.log("completed backend");
+    const result=await NextTodo.find({isCompleted: true})
+    console.log(result,"64");
     res.send(result)
 })
 app.listen(PORT,()=>{

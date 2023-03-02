@@ -5,7 +5,11 @@ import axios from 'axios'
 export const Middle=()=>{
     const [input,setInput]=useState('')
     const [array,setarray]=useState([])
-    useEffect(()=>{gettask()},[array])
+    const [activearray,setactivearray]=useState([])
+    const [completedarray,setcompletedarray]=useState([])
+
+
+    useEffect(()=>{gettask()},[input])
   const inputtext=(event)=>{
     console.log(event.target.value);
     setInput(event.target.value)
@@ -22,13 +26,21 @@ export const Middle=()=>{
 
     }
     const all=()=>{
-
+        gettask()
     }
-    const active=()=>{
-
+    const active=async(event)=>{
+       console.log("active frontend");
+      
+        const active=await axios.get('http://localhost:9000/activetodo');
+        console.log(active.data,"34");
+        setarray(active.data)
+        // console.log(activearray,"36");
     }
-    const completed=()=>{
-
+    const completed=async()=>{
+        console.log("completed frontend");
+        const completed=await axios.get('http://localhost:9000/completedtodo');
+        console.log(completed.data,"34");
+        setarray(completed.data)
     }
     const addtask=async(event)=>{
         event.preventDefault();
@@ -49,9 +61,7 @@ export const Middle=()=>{
        
     }
     const gettask=async(event)=>{
-        // event.preventDefault();
         const getarray=await axios.get('http://localhost:9000/gettodo')
-        // console.log(getarray,"49");
         setarray(getarray.data)
     }
     const deletetask=async(event)=>{
@@ -80,12 +90,29 @@ export const Middle=()=>{
         }
     }
     const Checkbox=async(event)=>{
-        console.log("check");
-        const id=event._id;
-        console.log(event._id);
-        const checkbox=await axios.patch(`http://localhost:9000/check/${id}`)
+        if(!event.isCompleted){
+            
+            console.log("check");
+            const id=event._id;
+            console.log(event._id);
+            const checkbox=await axios.patch(`http://localhost:9000/check/${id}`)
+            const markcompleted=await axios.get(`http://localhost:9000/gettodo`);
+            setarray(markcompleted.data)
+        }
+        else{
+            console.log("unmarkcompleted");
+            let id=event._id;
+            await axios.patch(`http://localhost:9000/uncheck/${id}`);
+            const markuncompleted=await axios.get(`http://localhost:9000/gettodo`);
+            setarray(markuncompleted.data)
+            console.log(markuncompleted.data,"52")
+        }
         // setarray(checkbox.data)
     }
+    const count=array.filter((item)=>{
+
+        return (item.isCompleted===false)}).length
+    
     return(
         <>
 <div className="innercontainer">  
@@ -118,7 +145,7 @@ export const Middle=()=>{
         </div>
         <div id="foot">
             <div id="footer">
-                <p id="count"> items left</p>
+                <p id="count">{count} items left</p>
                     <div id="filter">
                         <p id="all" onClick={all}>All</p>
                         <p id="active" onClick={active}>Active</p>
