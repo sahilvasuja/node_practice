@@ -112,7 +112,7 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   
 }
 #all{
-  border: 1px solid rgb(235,216,215);
+  /* border: 1px solid rgb(235,216,215); */
  padding: 3px
 }
 #all:hover{
@@ -128,10 +128,18 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
  padding: 3px;
 }
 #cross{
- 
-  color: rgb(183, 49, 49);
+  margin-left: 5px;
+  /* color: rgb(183, 49, 49); */
   margin-right: 15px;
+  font-weight:bolder;
+  /* font-size: large; */
+
+  cursor: pointer
 }
+.edit{
+  cursor: pointer
+}
+
 /* #cross:hover{
   display: "visible";
   
@@ -155,4 +163,9 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .btn{
   display: none;
+}
+.editdel{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

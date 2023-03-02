@@ -67,6 +67,25 @@ app.patch("/check/:id",async(req,res)=>{
         res.send(err);  
     }
   })
+  app.post("/edittodo/:editid",async(req,res)=>{
+    try{
+      console.log(req.body.task,"72"); 
+        const id=req.params.editid;
+        const task=req.body.task;
+        console.log(id,"79")
+        console.log(task,"75");
+        // let todo=await NextTodo.updateData(id,task);
+        let todo=await NextTodo. findByIdAndUpdate(id, { task: task })
+        const result= await todo.save();
+        console.log(result,"79");
+        const Todos=await NextTodo.find();
+        console.log(Todos,"121")
+      res.send(Todos)
+    }
+    catch(err){
+        console.log(err,"err");
+    }
+  })
   app.patch("/uncheck/:id",async(req,res)=>{
     try{
         const id=req.params.id;

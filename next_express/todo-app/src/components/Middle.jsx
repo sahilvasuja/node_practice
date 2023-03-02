@@ -2,13 +2,40 @@ import { useEffect, useState } from "react"
 import styles from '../styles/Home.module.css'
 import { FaChevronDown } from "react-icons/fa";
 import axios from 'axios'
+import { MdDelete } from "react-icons/md";
+import { BiEdit } from "react-icons/Bi";
+
+
 export const Middle=()=>{
     const [input,setInput]=useState('')
     const [array,setarray]=useState([])
     const [activearray,setactivearray]=useState([])
     const [completedarray,setcompletedarray]=useState([])
+    const [edited,setedited]=useState(false)
+    const [editinput,seteditinput]=useState('')
+    const [editid,seteditid]=useState('')
+    const edittask=(event)=>{
+        console.log(event,"17"); 
+        // seteditinput(event.task)
+        seteditid(event._id)
+        setedited(!edited)
+    }
+    const edittext=(event)=>{
+        // console.log(event._id,"21"); 
+        seteditinput(event.target.value)
 
 
+    }
+    const edittodo=async(event)=>{
+        if(editinput!=""){
+        console.log(editinput,"29");
+        const Edit=await axios.post(`http://localhost:9000/edittodo/${editid}`,{task: editinput, isCompleted: false});
+        seteditinput('')
+        console.log(Edit.data,"32");
+        setarray(Edit.data)
+        setedited(false)
+        }
+    }
     useEffect(()=>{gettask()},[input])
   const inputtext=(event)=>{
     console.log(event.target.value);
@@ -17,12 +44,6 @@ export const Middle=()=>{
   
     const allDone=()=>{
         console.log("object");
-
-    }
-    const icon=()=>{
-        
-        console.log("object");
-        
 
     }
     const all=()=>{
@@ -117,12 +138,17 @@ export const Middle=()=>{
         <>
 <div className="innercontainer">  
             <form className="task" onClick={addtask}>
-                <p id="icon" onClick={icon} className={allDone?'checked':'none'}>
+                <p id="icon" className={allDone?'checked':'none'}>
                 <FaChevronDown/>
                 </p>
-                
-                <input type="text" id="text" value={input} onChange={inputtext} placeholder="What needs to be done?" />
-                <button className='btn' type="submit" ></button>
+                {
+                    !edited?<input type="text" id="text" value={input} onChange={inputtext} placeholder="What needs to be done?" /> : 
+                    <form className="task" onClick={edittodo}>
+                     <input type="text" id="text" value={editinput} onChange={edittext} placeholder="Edit your Task" />
+                     <button className='btn' type="submit" ></button>
+                    </form>
+                }
+               <button className='btn' type="submit" ></button>
             </form>
             
         </div>
@@ -135,7 +161,10 @@ export const Middle=()=>{
                 return(<div className="inneradd">
                     <input type="checkbox" id="checkbox" onClick={()=>Checkbox(ele)} checked={ele.isCompleted} />
                     <p style={{textDecoration: ele.isCompleted ? "line-through" : "none"}}> {ele.task} </p>
-                    <p id="cross" onClick={()=>deletetask(ele)}>X</p>
+                    <div className="editdel">
+                    <p className="edit" onClick={()=>edittask(ele)}><BiEdit /></p>
+                    <p id="cross" onClick={()=>deletetask(ele)}> <MdDelete /></p>
+                    </div>
                     </div>
                 )
             
